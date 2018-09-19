@@ -113,10 +113,10 @@ for [hostname,ip1,ip2,ip3] in f:
             gitems = [{
                 "itemid" : host_items[0]['itemid'], 
                 "color" :"00AA00"
-            },
+            },{
                 "itemid" : host_items[1]['itemid'], 
                 "color" :"00AA00" 
-            ]
+            }]
         )
 
 
