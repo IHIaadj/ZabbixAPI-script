@@ -96,6 +96,28 @@ for [hostname,ip1,ip2,ip3] in f:
             interfaceid =  i["interfaceid"], 
             delay = "30s"
         )
+        
+        # Get Item IDs
+        host_items = zapi.item.get(filter={"hostid": hostcriado['hostids'][0]} )
+        if host_items:
+            items = host_items[0]
+            print(items)
+        else:
+            print("no item found") 
+
+        # Create Graphs 
+        graph = zapi.graph.create(
+            name  = "bandwidth"+i['ip'],
+            width=900, 
+            height = 500, 
+            gitems = [{
+                "itemid" : host_items[0]['itemid'], 
+                "color" :"00AA00"
+            },
+                "itemid" : host_items[1]['itemid'], 
+                "color" :"00AA00" 
+            ]
+        )
 
 
     
