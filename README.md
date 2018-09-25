@@ -10,4 +10,18 @@ Zabbix is software that monitors numerous parameters of a network and the health
   - Python 3.6 
   - unicodecsv==0.14.1
   - zabbix-api  
- 
+  - CSV file format should be : (IPAddress;VisibleHostName)
+  
+## Example 
+  1. Fill the CSV File with some hosts 
+  2. Install the dependencies : 
+    * `pip install unicodecsv`
+    * `pip install zabbix-api`
+  3. Run the script and enter the frontend server address in the arguments :
+    `python multiple-hosts.py http://server-ip-address/zabbix `
+  4. Enter the frontend server credentials as required. 
+  5. Enter the group name of the hosts, for example : "Linux servers"
+  6. The script automatically creates all hosts in the list with the In/Out items and graphs. 
+  
+## Note 
+ You can customize the items and graphs by modifying directly the script.
