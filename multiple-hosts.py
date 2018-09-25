@@ -24,20 +24,18 @@ zapi.timeout = 5.1
 zapi.login(user, password)
 print("Connected to Zabbix API Version %s" % zapi.api_version())
 
-print("----- Creation des hosts depuis le fichier csv ------ ")
+print("----- Création des hôtes depuis le fichier csv ------ ")
 group = []
 while(group == []):
-    groupName = input('Entrez le nom du groupe ')
+    groupName = input('Entrez le nom du groupe : ')
     group = zapi.hostgroup.get({'filter' : {"name":groupName}})
     if (group== []):
-        print("ce nom n'existe pas, Veuillez réessayer")
+        print("ce nom n'existe pas. Veuillez réessayer")
 
 #Read csv file (IpAddress;visibleName)
 f = csv.reader(open('hosts.csv'), delimiter=';')
 for [ip,visibleName] in f:
     # Create host 
-    print(ip)
-    print(visibleName)
 
     Params = {
             'host' : ip,
@@ -57,13 +55,12 @@ for [ip,visibleName] in f:
             }]
         }
     hostcriado = zapi.host.create(Params)
-    print(hostcriado['hostids'][0])
+    print(visibleName + " a été crée.")
 
     # Check for the interface ID 
     host_interface = zapi.hostinterface.get({'filter' : {"hostid": hostcriado['hostids'][0]}} )
     if host_interface:
         interface = host_interface[0]
-        print(interface)
     else:
         print("no interface found") 
 
@@ -119,10 +116,8 @@ for [ip,visibleName] in f:
     host_items = zapi.item.get({'filter' : {"hostid": hostcriado['hostids'][0]}} )
     if host_items:
         items = host_items[0]
-        print(items)
     else:
         print("no item found") 
-    print(host_items)
     # Create Graphs 
     graph = zapi.graph.create({
         'name' : "I/O-8",
