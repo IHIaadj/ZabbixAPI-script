@@ -24,7 +24,13 @@ zapi.timeout = 5.1
 zapi.login(user, password)
 print("Connected to Zabbix API Version %s" % zapi.api_version())
 
-print("----- Creating hosts from CSV file ------ ")
+print("----- Creation des hosts depuis le fichier csv ------ ")
+group = []
+while(group == []):
+    groupName = input('Entrez le nom du groupe ')
+    group = zapi.hostgroup.get({'filter' : {"name":groupName}})
+    if (group== []):
+        print("ce nom n'existe pas, Veuillez réessayer")
 
 #Read csv file (IpAddress;visibleName)
 f = csv.reader(open('hosts.csv'), delimiter=';')
@@ -45,6 +51,9 @@ for [ip,visibleName] in f:
                 "ip": ip,
                 "dns": "",
                 "port": 161
+            }],
+            'groups' : [{
+                "groupid" : group[0]['groupid']
             }]
         }
     hostcriado = zapi.host.create(Params)
