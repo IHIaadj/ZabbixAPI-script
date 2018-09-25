@@ -9,6 +9,5 @@ Zabbix is software that monitors numerous parameters of a network and the health
 ## Requirements 
   - Python 3.6 
   - unicodecsv==0.14.1
-  - nicodecsv==0.14.1
-  
+  - zabbix-api  
  
