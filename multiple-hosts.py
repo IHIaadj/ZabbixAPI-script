@@ -24,6 +24,7 @@ zapi.timeout = 5.1
 zapi.login(user, password)
 print("Connected to Zabbix API Version %s" % zapi.api_version())
 
+print("----- Creating hosts from CSV file ------ ")
 
 #Read csv file (IpAddress;visibleName)
 f = csv.reader(open('hosts.csv'), delimiter=';')
@@ -31,7 +32,8 @@ for [ip,visibleName] in f:
     # Create host 
     print(ip)
     print(visibleName)
-    hostcriado = zapi.host.create({
+
+    Params = {
             'host' : ip,
             'name' : visibleName, 
             'status' : 0,
@@ -43,11 +45,9 @@ for [ip,visibleName] in f:
                 "ip": ip,
                 "dns": "",
                 "port": 161
-            }],
-            'groups' : [{
-                "groupid": 13
-            }]    
-        })
+            }]
+        }
+    hostcriado = zapi.host.create(Params)
     print(hostcriado['hostids'][0])
 
     # Check for the interface ID 
